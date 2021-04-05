@@ -4,8 +4,9 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank {
-    private int x, y;
-    private Dir dir = Dir.DOWN;
+    public int x;
+    public int y;
+    Dir dir = Dir.DOWN;
     private static final int SPEED = 3;
 
     public static int WIDTH = ResourceMgr.goodTankD.getWidth();
@@ -13,12 +14,14 @@ public class Tank {
 
     private boolean moving = true;
 
-    private TankFrame tf = null;  //持有TankFrame的引用
+    TankFrame tf = null;  //持有TankFrame的引用
     private boolean living = true;
-    private Group group = Group.BAD;
+    Group group = Group.BAD;
     Rectangle rect = new Rectangle();
 
     private Random random = new Random();
+
+    FireStrategy fs;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -31,6 +34,22 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        if(group == Group.GOOD){
+            String goodFSName = (String) PropertyMgr.get("goodFs");
+            try {
+                fs = (FireStrategy) Class.forName(goodFSName).newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else{
+            fs = new DefaultFireStrategy();
+        }
+
     }
 
     public void paint(Graphics g) {
@@ -111,10 +130,10 @@ public class Tank {
         this.moving = moving;
     }
 
+    // 只在fire里用的策略FireStrategy,即可直接写在类的参数里
+    // 但这样每次都要new出对象，所以我们应该吧DefaultFireStrategy设计为单例模式
     public void fire() {
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(bX, by, this.dir, this.group, this.tf));
+        fs.fire(this);
     }
 
     public int getX() {
