@@ -1,12 +1,15 @@
 package com.mashibing.tank;
 
+import com.mashibing.tank.strategy.DefaultFireStrategy;
+import com.mashibing.tank.strategy.FireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject {
     public int x;
     public int y;
-    Dir dir = Dir.DOWN;
+    public Dir dir = Dir.DOWN;
     private static final int SPEED = 3;
 
     public static int WIDTH = ResourceMgr.goodTankD.getWidth();
@@ -15,13 +18,21 @@ public class Tank {
     private boolean moving = true;
 
     private boolean living = true;
-    Group group = Group.BAD;
+    public Group group = Group.BAD;
     Rectangle rect = new Rectangle();
 
     private Random random = new Random();
 
     FireStrategy fs;
-    GameModel gm;
+    public GameModel gm;
+
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
+    }
 
     public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
@@ -53,7 +64,7 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        if (!living) gm.tanks.remove(this);
+        if (!living) gm.remove(this);
 
 
         switch (dir) {
@@ -162,5 +173,9 @@ public class Tank {
 
     public void die() {
         this.living = false;
+    }
+
+    public void stop() {
+        moving=false;
     }
 }

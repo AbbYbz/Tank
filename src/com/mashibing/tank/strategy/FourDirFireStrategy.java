@@ -1,4 +1,8 @@
-package com.mashibing.tank;
+package com.mashibing.tank.strategy;
+
+import com.mashibing.tank.Bullet;
+import com.mashibing.tank.Dir;
+import com.mashibing.tank.Tank;
 
 public class FourDirFireStrategy implements FireStrategy {
     @Override
