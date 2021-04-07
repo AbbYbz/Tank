@@ -10,10 +10,7 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200,400, Dir.DOWN, Group.GOOD,this);
-    List<Bullet> bullets = new ArrayList<>();
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    GameModel gm = new GameModel();
 
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
@@ -54,35 +51,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹的数量："+bullets.size(),10,60);
-        g.drawString("敌人的数量："+tanks.size(),10,80);
-        g.drawString("爆炸的数量："+explodes.size(),10,100);
-        g.setColor(c);
-
-        myTank.paint(g);
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(g);
-        }
-
-        for (int i = 0; i < tanks.size(); i++) {
-            tanks.get(i).paint(g);
-        }
-
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
-        }
-
-        for (int i = 0; i < bullets.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                bullets.get(i).collideWith(tanks.get(j));
-            }
-        }
-
-        // 碰撞检测
-
-
+        gm.paint(g);
     }
 
     // 处理对键盘的监听
@@ -131,7 +100,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    gm.getMainTank().fire();
                     break;
             }
 
@@ -139,6 +108,7 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
+            Tank myTank = gm.getMainTank();
 
             if(!bL && !bU && !bR && !bD) myTank.setMoving(false);
             else {

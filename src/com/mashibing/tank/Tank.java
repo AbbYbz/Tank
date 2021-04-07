@@ -14,7 +14,6 @@ public class Tank {
 
     private boolean moving = true;
 
-    TankFrame tf = null;  //持有TankFrame的引用
     private boolean living = true;
     Group group = Group.BAD;
     Rectangle rect = new Rectangle();
@@ -22,13 +21,14 @@ public class Tank {
     private Random random = new Random();
 
     FireStrategy fs;
+    GameModel gm;
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
+        this.gm = gm;
 
         rect.x = this.x;
         rect.y = this.y;
@@ -53,7 +53,7 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        if (!living) tf.tanks.remove(this);
+        if (!living) gm.tanks.remove(this);
 
 
         switch (dir) {
