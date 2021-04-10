@@ -185,4 +185,14 @@ public class Tank extends GameObject {
     public void stop() {
         moving=false;
     }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
 }
