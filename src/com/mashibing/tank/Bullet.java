@@ -9,7 +9,6 @@ public class Bullet extends GameObject {
 
     Rectangle rect = new Rectangle();
 
-    private int x,y;
     private Dir dir;
     GameModel gm = null;
 

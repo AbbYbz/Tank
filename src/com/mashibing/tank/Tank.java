@@ -7,8 +7,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank extends GameObject {
-    public int x;
-    public int y;
+    int oldX,oldY;
+
     public Dir dir = Dir.DOWN;
     private static final int SPEED = 3;
 
@@ -85,6 +85,8 @@ public class Tank extends GameObject {
     }
 
     private void move() {
+        oldX = x;
+        oldY = y;
 
         if (!moving) return;
 
@@ -112,6 +114,11 @@ public class Tank extends GameObject {
         // update rect
         rect.x = this.x;
         rect.y = this.y;
+    }
+
+    public void back(){
+        x = oldX;
+        y=oldY;
     }
 
     private void boundsCheck() {
