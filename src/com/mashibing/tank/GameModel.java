@@ -13,12 +13,7 @@ public class GameModel {
 
     Tank myTank = new Tank(200,400, Dir.DOWN, Group.GOOD,this);
 
-//    List<Bullet> bullets = new ArrayList<>();
-//    List<Tank> tanks = new ArrayList<>();
-//    List<Explode> explodes = new ArrayList<>();
-
-//    Collider collider = new BulletTankCollider();
-//    Collider collider2 = new TankTankCollider();
+    // 责任链
     ColliderChain chain = new ColliderChain();
 
     private List<GameObject> objects = new ArrayList<>();
@@ -30,6 +25,11 @@ public class GameModel {
         for (int i = 0; i < initTankCount; i++) {
             add(new Tank(50+i*100, 200, Dir.DOWN, Group.BAD, this));
         }
+
+        add(new Wall(150,150,200,50));
+        add(new Wall(550,150,200,50));
+        add(new Wall(300,300,50,200));
+        add(new Wall(550,300,50,200));
     }
 
     public void add(GameObject go){
@@ -43,9 +43,6 @@ public class GameModel {
     public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.WHITE);
-//        g.drawString("子弹的数量："+bullets.size(),10,60);
-//        g.drawString("敌人的数量："+tanks.size(),10,80);
-//        g.drawString("爆炸的数量："+explodes.size(),10,100);
         g.setColor(c);
 
         myTank.paint(g);

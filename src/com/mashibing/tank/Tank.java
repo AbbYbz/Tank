@@ -19,7 +19,7 @@ public class Tank extends GameObject {
 
     private boolean living = true;
     public Group group = Group.BAD;
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
 
     private Random random = new Random();
 
