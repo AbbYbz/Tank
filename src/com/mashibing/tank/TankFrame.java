@@ -10,8 +10,6 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-    GameModel gm = new GameModel();
-
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     public TankFrame() {
@@ -51,7 +49,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        gm.paint(g);
+        GameModel.getInstance().paint(g);
     }
 
     // 处理对键盘的监听
@@ -100,7 +98,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    gm.getMainTank().fire();
+                    GameModel.getInstance().getMainTank().fire();
                     break;
             }
 
@@ -108,7 +106,7 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            Tank myTank = gm.getMainTank();
+            Tank myTank = GameModel.getInstance().getMainTank();
 
             if(!bL && !bU && !bR && !bD) myTank.setMoving(false);
             else {
